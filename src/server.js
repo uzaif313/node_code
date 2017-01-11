@@ -3,7 +3,7 @@
     
     const http = require('http')
     const url = require('url')
-    
+    const qs = require("querystring") 
     let routes ={
         'GET':{
             '/':(req,res)=>{
@@ -20,6 +20,24 @@
              }
         },
         'POST':{
+
+            '/api/user/create':(req,res) =>{
+                let body = ''
+                req.on('data',data=>{
+                    body += data
+                    if (body.length > 2463614){
+                        res.writeHead(413,{'Content-type':'text/html'})
+                        res.end("Unable to load server with this data")
+                        res.connection.destroy();
+                    }
+                    console.log(body.length)
+                })
+                req.on('end',()=>{
+                    body = qs.parse(body)
+                    console.log(body.username)
+                    console.log(body.password)
+                })
+            }
 
         },
         '404':(req,res)=>{
