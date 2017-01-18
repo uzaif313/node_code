@@ -15,7 +15,7 @@
 
 
     function fileAccess(filepath){
-       return new Promise((resolved,reject)=>{
+       return new Promise((resolve,reject)=>{
             fs.access(filepath,fs.FS_OK,error=>{
                 if(!error){
                    resolve(filepath) 
@@ -27,10 +27,10 @@
     }
 
     function fileReader(filepath){
-        return new Promise((resolved,reject)=>{
-            fs.read(filepath,(error,conten)=>{
+        return new Promise((resolve,reject)=>{
+            fs.readFile(filepath,(error,content)=>{
                 if(!error){
-                    resolved(content)
+                    resolve(content)
                 }else{
                     reject(error)
                 }
@@ -52,6 +52,7 @@
                   .catch(error=>{
                     res.writeHead(404);
                     res.end(JSON.stringify(error))
+                    console.log(error)
                   });
 
     }
